@@ -90,6 +90,9 @@ public:
     FontContext(const FT_Byte* pData, unsigned int length);
     
     const FT_Byte* GetGlyph(int code, FreeTypeGlyph& glyph, int fontSize, int outlineSize = 0, bool bold = false);
+
+    void GetSizeMetrics(int size,FT_Size_Metrics* ptr);
+
 private:
     void RenderSpans(FT_Outline* pOutline, Spans* spans);
     

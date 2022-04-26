@@ -109,6 +109,14 @@ void FontContext::RenderSpans(FT_Outline* pOutline, Spans* spans)
     FT_Outline_Render(m_context.m_FTlibrary, pOutline, &params);
 }
 
+void FontContext::GetSizeMetrics(int size,FT_Size_Metrics* ptr){
+
+    if(m_context.m_FTlibrary!=nullptr && m_context.m_face!=nullptr){
+        m_context.SetSize(size);
+        *ptr = m_context.m_face->size->metrics;
+    }
+}
+
 
 const FT_Byte* FontContext::GetGlyph(int code, FreeTypeGlyph& glyph, int fontSize, int outlineSize, bool bold)
 {

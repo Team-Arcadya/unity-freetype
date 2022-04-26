@@ -15,7 +15,8 @@ extern "C"
     EXPORT FontContext* UFT_CreateFontContextByData(const FT_Byte* pData, unsigned int length);
     EXPORT void UFT_DeleteFontContext(FontContext* pDefine);
     EXPORT const FT_Byte* UFT_GetGlyph(FontContext* pDefine, int code, FreeTypeGlyph* glyph, int fontSize, int outlineSize, bool bold);
-    EXPORT void UFT_MemoryCopy(unsigned int* pDst, unsigned int* pSrc, int size);
+    EXPORT void UFT_MemoryCopy(unsigned int* pDst, unsigned int* pSrc, int size); 
+    EXPORT const FT_Size_Metrics* UFT_GetGlobalMetrics(int size);
 }
 
 #endif
