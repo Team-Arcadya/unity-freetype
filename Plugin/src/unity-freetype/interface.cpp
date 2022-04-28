@@ -36,12 +36,10 @@ void UFT_MemoryCopy(unsigned int* pDst, unsigned int* pSrc, int size)
 }
 
 
-const FT_Size_Metrics* UFT_GetGlobalMetrics(FontContext* pContext,int size){
-    const FT_Size_Metrics* pRet = nullptr;
+uint32_t UFT_GetGlobalMetrics(FontContext* pContext,int size,FT_Size_Metrics* pData){
     if(pContext!= nullptr && size > 0){
-        FT_Size_Metrics ret;
-        pContext->GetSizeMetrics(size,&ret);
-        memcpy((void*)pRet,&ret,sizeof(FT_Size_Metrics));
+        pContext->GetSizeMetrics(size,pData);
+        return pData->height;
     }
-    return pRet;
+    return 0;
 }
