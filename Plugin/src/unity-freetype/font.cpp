@@ -1,4 +1,5 @@
 #include "font.h"
+#include "nativelog.h"
 
 #define FT_SUCCEES(...) ((__VA_ARGS__) == 0)
 #define FT_SHIFT6(Arg)  (int)((Arg) >> 6)
@@ -13,6 +14,9 @@ FreeTypeContext::FreeTypeContext(const char* pPath)
         FT_New_Face(m_FTlibrary, pPath, 0, &m_face);
         FT_Select_Charmap(m_face, FT_ENCODING_UNICODE);
     }
+    else{
+        NativeLog::Log("ft load lib failed");
+    }
 }
 
 FreeTypeContext::FreeTypeContext(const FT_Byte* pData, unsigned int length)
@@ -26,6 +30,10 @@ FreeTypeContext::FreeTypeContext(const FT_Byte* pData, unsigned int length)
         memcpy(m_pData, pData, length);
         FT_New_Memory_Face(m_FTlibrary, m_pData, length, 0, &m_face);
         FT_Select_Charmap(m_face, FT_ENCODING_UNICODE);
+
+    }
+    else{
+        NativeLog::Log("ft load lib failed");
     }
 }
 
@@ -107,6 +115,20 @@ void FontContext::RenderSpans(FT_Outline* pOutline, Spans* spans)
     params.user = spans;
     
     FT_Outline_Render(m_context.m_FTlibrary, pOutline, &params);
+}
+
+void FontContext::GetSizeMetrics(int size,FT_Size_Metrics* ptr){
+    if(m_context.m_FTlibrary!=nullptr && m_context.m_face!=nullptr){
+        m_context.SetSize(size);
+
+        FT_Size_Metrics ret= m_context.m_face->size->metrics;
+        memcpy(ptr,&ret,sizeof(FT_Size_Metrics));
+    }
+    else{
+        NativeLog::Log("GetSizeMetrics failed");
+
+        (*ptr).height = 0;
+    }
 }
 
 
