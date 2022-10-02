@@ -6,7 +6,7 @@ endif()
 
 if(${TARGET_PLATFORM} STREQUAL Android)
     set(ANDROID_NDK $ENV{ANDROID_NDK_ROOT})
-    set(CMAKE_TOOLCHAIN_FILE cmake/android.toolchain.cmake)
+    set(CMAKE_TOOLCHAIN_FILE $ENV{ANDROID_NDK_ROOT}/build/cmake/android.toolchain.cmake)
 endif()
 
 set(PROJ unity-freetype)
